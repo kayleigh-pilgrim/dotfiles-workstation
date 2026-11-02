@@ -325,7 +325,10 @@ ln -s $DOTFILES/nvim $HOME/.config/nvim
 #' | sudo tee /etc/nsswitch.conf
 #sudo systemctl restart systemd-resolved
 
-
+msg "Installing fonts"
+rm -rf $HOME/.local/share/fonts
+ln -s $DOTFILES/fonts $HOME/.local/share/fonts
+fc-cache
 
 # Set up 1password
 # Log in to tailscale

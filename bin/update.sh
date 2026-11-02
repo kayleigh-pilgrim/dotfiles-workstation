@@ -25,11 +25,8 @@ msg "Updating and cleaning system packages"
 #sudo pacman -Syyu
 paru -Syu # Update
 #paru -Sc # Clean uninstalled packages cache and old versions
-#sudo pacman -Rs $(sudo pacman -Qdtq) # Remove dependencies that are no longer needed (list them with pacman -Qdt)
-#sudo apt update
-#sudo apt upgrade
-#sudo apt full-upgrade
-#sudo apt autoremove
+sudo pacman -Rs $(sudo pacman -Qdtq) # Remove dependencies that are no longer needed (list them with pacman -Qdt)
+
 #msg "Updating snap packages"
 #sudo snap refresh 
 
