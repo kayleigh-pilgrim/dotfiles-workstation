@@ -1,5 +1,8 @@
 #!/usr/bin/env bash
 
+# Questions
+#read -r -p 'Adguard quick dns address: ' ADGUARD_DNS
+
 # Colors
 YELLOW='\033[0;33m'
 RED='\033[0;31m'
@@ -32,150 +35,152 @@ curl -sS https://downloads.1password.com/linux/keys/1password.asc | gpg --import
 
 msg "Installing packages"
 paru -S --needed \
-mc \
-paru \
-yay \
-rclone \
-zsh \
-tor \
-git \
-git-delta \
-github-cli \
-php \
-php-sqlite \
-php-fpm \
-php-gd \
-php-imagick \
-php-pgsql \
-php-redis \
-valkey \
-composer \
-nodejs \
-npm \
-neovim \
-bat \
-fzf \
-ripgrep \
-tmux \
-htop \
-btop \
-lm_sensors \
-rsync \
-gnupg \
-zoxide \
-tailscale \
-dbeaver \
-lolcat \
-deno \
-rustup \
-cargo-update \
-stylua \
-lua \
-luarocks \
-luacheck \
-docker-compose \
-docker \
-docker-buildx \
-containerd \
-httpie \
-ruby \
-python \
-python-pipx \
-go \
-mtr \
-tree \
-bc \
-lsb-release \
-pinentry \
-direnv \
-fd \
-jq \
-yq \
-bottom \
-astyle \
-shellcheck \
-base-devel \
-clang \
-kitty \
-ruff \
-clamav \
-rkhunter \
-syncthing \
-cherrytree \
-wireshark-qt \
-wireshark-cli \
-nmap \
-zenmap \
-radare2 \
-r2ghidra \
-hydra \
-gobuster \
-john \
-hashcat \
-hashcat-utils \
-metasploit \
-postgresql \
-nasm \
-gdb \
-strace \
-binutils \
-remmina \
-v4l-utils \
-v4l2loopback-dkms \
-v4l2loopback-utils \
-linux-lts-headers \
-icu \
-libxml2 \
-libxml2-legacy \
-flite \
-qemu-desktop \
-libvirt \
-virt-manager \
-dnsmasq \
-edk2-ovmf \
-1password \
-google-chrome \
-slack-desktop-wayland-jetm \
-postman-bin \
-insomnia \
-proselint \
-multitail \
-mailpit \
-gitlint \
-prettierd \
-tailwindcss-language-server \
-vue-language-server \
-bash-language-server \
-eslint-language-server \
-emmet-language-server \
-eslint_d \
-nodejs-intelephense \
-npm-check-updates \
-tree-sitter-cli \
-typescript \
-stylelint \
-eza \
-icu74 \
-playwright-webkit-flite-deps \
-asm-lsp \
-rappel-git \
-bless \
-squawker-vpn-bin \
-responder \
-evil-winrm-py \
-notion \
-xsel \
-terminator \
-openvpn \
-subfinder \
-testssl.sh \
-azure-cli \
-aws-cli \
-bloodyad \
-valgrind \
-tailscale \
-nodejs \
-npm
+    mc \
+    paru \
+    yay \
+    rclone \
+    zsh \
+    tor \
+    git \
+    git-delta \
+    github-cli \
+    php \
+    php-sqlite \
+    php-fpm \
+    php-gd \
+    php-imagick \
+    php-pgsql \
+    php-redis \
+    valkey \
+    composer \
+    nodejs \
+    npm \
+    neovim \
+    bat \
+    fzf \
+    ripgrep \
+    tmux \
+    htop \
+    btop \
+    lm_sensors \
+    rsync \
+    gnupg \
+    zoxide \
+    tailscale \
+    dbeaver \
+    lolcat \
+    deno \
+    rustup \
+    cargo-update \
+    stylua \
+    lua \
+    luarocks \
+    luacheck \
+    docker-compose \
+    docker \
+    docker-buildx \
+    containerd \
+    httpie \
+    ruby \
+    python \
+    python-pipx \
+    go \
+    mtr \
+    tree \
+    bc \
+    lsb-release \
+    pinentry \
+    direnv \
+    fd \
+    jq \
+    yq \
+    bottom \
+    astyle \
+    shellcheck \
+    base-devel \
+    clang \
+    kitty \
+    ruff \
+    clamav \
+    rkhunter \
+    syncthing \
+    cherrytree \
+    wireshark-qt \
+    wireshark-cli \
+    nmap \
+    zenmap \
+    radare2 \
+    r2ghidra \
+    hydra \
+    gobuster \
+    john \
+    hashcat \
+    hashcat-utils \
+    metasploit \
+    postgresql \
+    nasm \
+    gdb \
+    strace \
+    binutils \
+    remmina \
+    v4l-utils \
+    v4l2loopback-dkms \
+    v4l2loopback-utils \
+    linux-lts-headers \
+    icu \
+    libxml2 \
+    libxml2-legacy \
+    flite \
+    qemu-desktop \
+    libvirt \
+    virt-manager \
+    dnsmasq \
+    edk2-ovmf \
+    1password \
+    google-chrome \
+    slack-desktop-wayland-jetm \
+    postman-bin \
+    insomnia \
+    proselint \
+    multitail \
+    mailpit \
+    gitlint \
+    prettierd \
+    tailwindcss-language-server \
+    vue-language-server \
+    bash-language-server \
+    eslint-language-server \
+    emmet-language-server \
+    eslint_d \
+    nodejs-intelephense \
+    npm-check-updates \
+    tree-sitter-cli \
+    typescript \
+    stylelint \
+    eza \
+    icu74 \
+    playwright-webkit-flite-deps \
+    asm-lsp \
+    rappel-git \
+    bless \
+    squawker-vpn-bin \
+    responder \
+    evil-winrm-py \
+    notion \
+    xsel \
+    terminator \
+    openvpn \
+    subfinder \
+    testssl.sh \
+    azure-cli \
+    aws-cli \
+    bloodyad \
+    valgrind \
+    tailscale \
+    nodejs \
+    npm \
+    dnsproxy \
+    bind
 
 msg "Initializing PostgreSQL"
 if ! sudo test -d /var/lib/postgres/data; then
@@ -268,6 +273,59 @@ chsh -s $(which zsh)
 msg "Neovim config"
 rm -rf $HOME/.config/nvim
 ln -s $DOTFILES/nvim $HOME/.config/nvim
+
+#msg "Set Adguard DNS"
+#sudo tailscale set --accept-dns=false
+#echo -e "
+#[Unit]
+#Description=AdGuard DNS over QUIC proxy
+#After=network-online.target
+#Wants=network-online.target
+#
+#[Service]
+#ExecStart=/usr/bin/dnsproxy --listen=127.0.0.1 --port=53 --upstream=$ADGUARD_DNS --bootstrap=94.140.14.14:53
+#Restart=on-failure
+#RestartSec=5
+#
+#[Install]
+#WantedBy=multi-user.target
+#" | sudo tee /etc/systemd/system/adguard-doq.service > /dev/null
+#sudo systemctl daemon-reload
+#sudo systemctl enable --now adguard-doq.service
+#echo -e "
+#[main]
+#dns=none
+#systemd-resolved=false
+#" | sudo tee /etc/NetworkManager/conf.d/90-dns-unmanaged.conf > /dev/null
+#sudo systemctl reload NetworkManager
+#echo -e '
+#nameserver 127.0.0.1
+#' | sudo tee /etc/resolv.conf
+#echo -e '
+## Name Service Switch configuration file.
+## See nsswitch.conf(5) for details.
+#
+#passwd: files systemd
+#roup: files [SUCCESS=merge] systemd
+#shadow: files systemd
+#gshadow: files systemd
+#
+#publickey: files
+#
+##hosts: mymachines resolve [!UNAVAIL=return] files myhostname dns
+#hosts: mymachines files myhostname dns
+#networks: files
+#
+#protocols: files
+#services: files
+#ethers: files
+#rpc: files
+#
+#netgroup: files
+#' | sudo tee /etc/nsswitch.conf
+#sudo systemctl restart systemd-resolved
+
+
 
 # Set up 1password
 # Log in to tailscale
