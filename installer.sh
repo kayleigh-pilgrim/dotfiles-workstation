@@ -42,7 +42,7 @@ DOTFILES="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 ################
 
 #
-# 1Password GPG key fingerprint
+# 1Password GPG key
 #
 onepassword_key_fingerprint="3FEF9748469ADBE15DA7CA80AC2D62742012EA22"
 if ! gpg --list-keys "$onepassword_key_fingerprint" >/dev/null 2>&1; then
@@ -55,9 +55,9 @@ fi
 # Install not-yet-installed packages using paru
 #
 msg "Installing packages"
+pacman -S --needed paru
 paru -S --needed \
     mc \
-    paru \
     yay \
     rclone \
     zsh \
