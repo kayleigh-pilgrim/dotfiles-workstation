@@ -77,12 +77,12 @@ fi
 
 # IP4I
 #IP4I=`/sbin/ifconfig | grep 'inet ' | grep -v '127.' | awk -F' ' '{print $2}' | xargs echo -n`
-IP4I=`ip address show dev wlo1 | grep wlo1 | grep '/24' | awk -F' ' '{print $2}' | xargs echo -n`
+IP4I=`ip address show dev wlan0 | grep wlan0 | grep '/24' | awk -F' ' '{print $2}' | xargs echo -n`
 # IP4E
 #IP4E=`wget https://v4.ident.me/ -O - -q | xargs echo -n`
 # IP6I
 #IP6I=`/sbin/ifconfig | grep 'inet6' | grep -v 'fe80::' | grep -v '::1' | awk -F' ' '{print $2"  "}' | xargs echo -n`
-IP6I=`ip address show dev wlo1 | grep dynamic | grep '/64' | awk -F' ' '{print $2}' | xargs echo -n`
+IP6I=`ip address show dev wlan0 | grep dynamic | grep '/64' | awk -F' ' '{print $2}' | xargs echo -n`
 # IP6E
 #IP6E=`wget https://v6.ident.me/ -O - -q | xargs echo -n`
 
@@ -194,7 +194,7 @@ printf '\n ░ ░░ ░  ░   ▒   ▒ ▒ ░░    ░ ░      ░    ▒
 printf '\n ░  ░        ░  ░░ ░         ░  ░   ░  ░ ░        ░  ░  ░  ░'
 printf '\n                 ░ ░'
 printf "\n\n${Yellow} "
-printf "`ddate | xargs echo -n`"
+#printf "`ddate | xargs echo -n`"
 printf "\n"
 
 

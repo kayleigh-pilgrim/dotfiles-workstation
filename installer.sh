@@ -87,7 +87,6 @@ paru -S --needed \
     rsync \
     gnupg \
     zoxide \
-    tailscale \
     dbeaver \
     lolcat \
     deno \
@@ -97,6 +96,7 @@ paru -S --needed \
     lua \
     luarocks \
     luacheck \
+    ghostty \
     docker-compose \
     docker \
     docker-buildx \
