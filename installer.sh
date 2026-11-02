@@ -609,4 +609,5 @@ msg "Still TODO:
     - Log in to Tailscale (sudo tailscale up --hostname=<hostname>)
     - Log in to Chrome
     - Log in to vs code
+    - Get files if needed, and set up syncthing
 "
