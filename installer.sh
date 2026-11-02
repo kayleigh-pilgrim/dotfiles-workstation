@@ -55,7 +55,7 @@ fi
 # Install not-yet-installed packages using paru
 #
 msg "Installing packages"
-pacman -S --needed paru
+sudo pacman -S --needed paru
 paru -S --needed \
     mc \
     yay \
