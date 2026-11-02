@@ -1,0 +1,41 @@
+Host *
+    IdentityAgent ~/.1password/agent.sock
+
+    StrictHostKeyChecking accept-new
+    TCPKeepAlive yes
+    ServerAliveInterval 120
+    ServerAliveCountMax 30
+    AddKeysToAgent yes
+    KexAlgorithms -diffie-hellman-group1-sha1,diffie-hellman-group14-sha1,diffie-hellman-group-exchange-sha1
+    Ciphers -3des-cbc,*-cbc
+    MACs -hmac-sha1,hmac-sha1-96,hmac-sha1-etm@openssh.com,hmac-sha1-96-etm@openssh.com
+    LogLevel ERROR
+
+    # Use a shared channel for all sessions to the same host
+    ControlMaster auto
+    ControlPath ~/.ssh/control/%C
+    ControlPersist 600
+
+Host daemon
+    User root
+    HostName daemon.int.l33t.one
+
+Host angelbeats
+    User root
+    HostName angelbeats.int.l33t.one
+
+Host homie
+    User root
+    HostName 192.168.1.200
+
+Host homie_external
+    User root
+    HostName homie.int.l33t.one
+
+Host parrot
+    User kayleigh
+    HostName parrot.int.l33t.one
+
+Host *.labs.overthewire.org
+    SendEnv WECHALLTOKEN
+    SendEnv WECHALLUSER

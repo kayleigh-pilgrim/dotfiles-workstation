@@ -1,0 +1,93 @@
+snippet select "SELECT query"
+	SELECT
+	    ${1:*}
+	FROM ${2:table_name}
+	WHERE ${3:condition};
+
+snippet selectall "SELECT all rows"
+	SELECT *
+	FROM ${1:table_name};
+
+snippet insert "INSERT query"
+	INSERT INTO ${1:table_name} (
+	    ${2:column_name}
+	)
+	VALUES (
+	    ${3:value}
+	);
+
+snippet update "UPDATE query"
+	UPDATE ${1:table_name}
+	SET ${2:column_name} = ${3:value}
+	WHERE ${4:condition};
+
+snippet delete "DELETE query"
+	DELETE FROM ${1:table_name}
+	WHERE ${2:condition};
+
+snippet join "SELECT with JOIN"
+	SELECT
+	    ${1:left_table}.*
+	FROM ${1}
+	${2:INNER} JOIN ${3:right_table}
+	    ON ${1}.${4:id} = ${3}.${5:left_id}
+	WHERE ${0};
+
+snippet cte "common table expression"
+	WITH ${1:name} AS (
+	    SELECT
+	        ${2:*}
+	    FROM ${3:table_name}
+	    WHERE ${4:condition}
+	)
+	SELECT
+	    ${0:*}
+	FROM ${1};
+
+snippet tx "transaction"
+	START TRANSACTION;
+
+	${0}
+
+	COMMIT;
+
+snippet table "CREATE TABLE"
+	CREATE TABLE ${1:table_name} (
+	    id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+	    ${0}
+	);
+
+snippet index "CREATE INDEX"
+	CREATE INDEX ${1:index_name}
+	    ON ${2:table_name} (${3:column_name});
+
+snippet uniqueindex "CREATE UNIQUE INDEX"
+	CREATE UNIQUE INDEX ${1:index_name}
+	    ON ${2:table_name} (${3:column_name});
+
+snippet case "CASE expression"
+	CASE
+	    WHEN ${1:condition} THEN ${2:value}
+	    ELSE ${3:fallback}
+	END
+
+snippet upsert "MariaDB upsert"
+	INSERT INTO ${1:table_name} (
+	    ${2:column_name}
+	)
+	VALUES (
+	    ${3:value}
+	)
+	ON DUPLICATE KEY UPDATE
+	    ${2} = VALUES(${2});
+
+snippet explain "EXPLAIN query"
+	EXPLAIN
+	${0:SELECT * FROM table_name};
+
+snippet exists "WHERE EXISTS"
+	WHERE EXISTS (
+	    SELECT 1
+	    FROM ${1:table_name}
+	    WHERE ${0}
+	)

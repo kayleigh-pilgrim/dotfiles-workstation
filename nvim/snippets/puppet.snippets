@@ -1,0 +1,38 @@
+snippet class "Puppet class"
+	class ${1:profile::name} (
+	  ${2}
+	) {
+	  ${0}
+	}
+
+snippet file "Puppet file resource"
+	file { '${1:/path/to/file}':
+	  ensure  => ${2:file},
+	  owner   => '${3:root}',
+	  group   => '${4:root}',
+	  mode    => '${5:0644}',
+	  ${0}
+	}
+
+snippet package "Puppet package resource"
+	package { '${1:package}':
+	  ensure => ${2:installed},
+	}
+
+snippet service "Puppet service resource"
+	service { '${1:service}':
+	  ensure => ${2:running},
+	  enable => ${3:true},
+	}
+
+snippet exec "Puppet exec resource"
+	exec { '${1:name}':
+	  command => '${2:/usr/bin/command}',
+	  unless  => '${3:/usr/bin/test condition}',
+	  path    => ['/usr/bin', '/usr/sbin', '/bin', '/sbin'],
+	}
+
+snippet epp "EPP template content"
+	content => epp('${1:profile/template.epp}', {
+	  '${2:parameter}' => $${3:value},
+	}),

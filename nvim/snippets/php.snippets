@@ -1,0 +1,80 @@
+snippet pubf "public method"
+  public function ${1:methodName}(${2}): ${3:void}
+  {
+    ${0}
+  }
+
+snippet prof "protected method"
+  protected function ${1:methodName}(${2}): ${3:void}
+  {
+    ${0}
+  }
+
+snippet prif "private method"
+  private function ${1:methodName}(${2}): ${3:void}
+  {
+    ${0}
+  }
+
+snippet ctor "constructor"
+	public function __construct(
+		${1}
+	) {
+		${0}
+	}
+
+snippet ctorpr "constructor with promoted property"
+	public function __construct(
+		private readonly ${1:Type} $${2:dependency},
+	) {
+		${0}
+	}
+
+snippet inv "invokable method"
+	public function __invoke(${1}): ${2:void}
+	{
+		${0}
+	}
+
+snippet testt "Pest test"
+  test('${1:description}', function () {
+    ${0}
+  });
+
+snippet testit "Pest it test"
+  it('${1:description}', function () {
+    ${0}
+  });
+
+snippet testd "Pest describe block"
+  describe('${1:subject}', function () {
+    ${0}
+  });
+
+snippet testb "Pest beforeEach hook"
+  beforeEach(function () {
+    ${0}
+  });
+
+snippet testa "Pest afterEach hook"
+  afterEach(function () {
+    ${0}
+  });
+
+snippet testexpect "Pest expectation"
+	expect(${1:$value})->${2:toBe}(${3});
+
+snippet testthrows "Pest test expecting an exception"
+	it('${1:description}', function () {
+		${0}
+	})->throws(${2:\Throwable::class});
+
+snippet testwith "Pest dataset"
+	->with([
+		${1}
+	]);
+
+snippet testdataset "Named Pest dataset"
+	dataset('${1:name}', [
+		${0}
+	]);

@@ -1,0 +1,22 @@
+-- Track coding activity with WakaTime and send it to Wakapi.
+return {
+  'wakatime/vim-wakatime',
+
+  -- WakaTime must observe startup, buffer, cursor, change, and write
+  -- events from the beginning of the Neovim session.
+  lazy = false,
+
+  opts = {
+    -- WakaTime's normal two-minute heartbeat interval balances
+    -- accurate tracking with unnecessary API traffic.
+    heartbeat_frequency = 2,
+
+    -- Keep asynchronous operation and only redraw when necessary.
+    debug = false,
+    redraw_setting = 'auto',
+
+    -- Show today's tracked time in Lualine. This does not affect
+    -- heartbeat collection and can be disabled independently.
+    status_bar_enabled = true,
+  },
+}

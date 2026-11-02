@@ -1,0 +1,75 @@
+snippet fn "function"
+	function ${1:functionName}(${2}) {
+	  ${0}
+	}
+
+snippet afn "async function"
+	async function ${1:functionName}(${2}) {
+	  ${0}
+	}
+
+snippet arrow "arrow function"
+	const ${1:functionName} = (${2}) => {
+	  ${0}
+	};
+
+snippet aarrow "async arrow function"
+	const ${1:functionName} = async (${2}) => {
+	  ${0}
+	};
+
+snippet imp "named import"
+	import { ${1:name} } from '${2:module}';
+
+snippet impd "default import"
+	import ${1:name} from '${2:module}';
+
+snippet exp "named export"
+	export { ${1:name} };
+
+snippet expd "default export"
+	export default ${1:name};
+
+snippet class "class"
+	class ${1:ClassName} {
+	  constructor(${2}) {
+	    ${0}
+	  }
+	}
+
+snippet try "try/catch"
+	try {
+	  ${1}
+	} catch (${2:error}) {
+	  ${0}
+	}
+
+snippet route "Express route"
+	router.${1:get}('${2:/path}', async (req, res, next) => {
+	  try {
+	    ${0}
+	  } catch (error) {
+	    next(error);
+	  }
+	});
+
+snippet middleware "Express middleware"
+	function ${1:middlewareName}(req, res, next) {
+	  ${0}
+	  next();
+	}
+
+snippet errorware "Express error middleware"
+	function ${1:errorHandler}(error, req, res, next) {
+	  ${0}
+	}
+
+snippet describe "test describe block"
+	describe('${1:subject}', () => {
+	  ${0}
+	});
+
+snippet test "test"
+	test('${1:description}', ${2:async }() => {
+	  ${0}
+	});

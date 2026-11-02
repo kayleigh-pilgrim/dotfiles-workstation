@@ -1,0 +1,88 @@
+snippet def "typed function"
+	def ${1:function_name}(${2}) -> ${3:None}:
+		${0}
+
+snippet adef "typed async function"
+	async def ${1:function_name}(${2}) -> ${3:None}:
+		${0}
+
+snippet class "class"
+	class ${1:ClassName}:
+		def __init__(self, ${2}) -> None:
+			${0}
+
+snippet dataclass "dataclass"
+	@dataclass(slots=True)
+	class ${1:ClassName}:
+		${2:name}: ${3:str}
+		${0}
+
+snippet main "main guard"
+	def main() -> None:
+		${0}
+
+
+	if __name__ == "__main__":
+		main()
+
+snippet try "try/except"
+	try:
+		${1}
+	except ${2:Exception} as ${3:error}:
+		${0}
+
+snippet withopen "open file"
+	with open(${1:path}, mode="${2:r}", encoding="${3:utf-8}") as ${4:file}:
+		${0}
+
+snippet pytest "pytest test"
+	def test_${1:description}() -> None:
+		${0}
+
+snippet fixture "pytest fixture"
+	@pytest.fixture
+	def ${1:fixture_name}():
+		${0}
+
+snippet parametrize "pytest parametrized test"
+	@pytest.mark.parametrize(
+		"${1:argument}",
+		[
+			${2}
+		],
+	)
+	def test_${3:description}(${1}) -> None:
+		${0}
+
+snippet flaskroute "Flask route"
+	@app.${1:get}("${2:/path}")
+	def ${3:handler_name}():
+		${0}
+
+snippet flaskblueprint "Flask blueprint route"
+	@${1:blueprint}.${2:get}("${3:/path}")
+	def ${4:handler_name}():
+		${0}
+
+snippet djangoview "Django function view"
+	def ${1:view_name}(request: HttpRequest) -> HttpResponse:
+		${0}
+
+snippet djangomodel "Django model"
+	class ${1:ModelName}(models.Model):
+		${2:name} = models.${3:CharField}(max_length=${4:255})
+
+		def __str__(self) -> str:
+			return str(self.${2})
+
+snippet argparse "argument parser"
+	parser = argparse.ArgumentParser(
+		description="${1:description}",
+	)
+	parser.add_argument(
+		"${2:argument}",
+		${3}
+	)
+	args = parser.parse_args()
+
+	${0}

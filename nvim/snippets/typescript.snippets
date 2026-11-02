@@ -1,0 +1,86 @@
+snippet fn "typed function"
+	function ${1:functionName}(${2}): ${3:void} {
+	  ${0}
+	}
+
+snippet afn "typed async function"
+	async function ${1:functionName}(${2}): Promise<${3:void}> {
+	  ${0}
+	}
+
+snippet arrow "typed arrow function"
+	const ${1:functionName} = (${2}): ${3:void} => {
+	  ${0}
+	};
+
+snippet aarrow "typed async arrow function"
+	const ${1:functionName} = async (${2}): Promise<${3:void}> => {
+	  ${0}
+	};
+
+snippet imp "named import"
+	import { ${1:name} } from '${2:module}';
+
+snippet impt "type import"
+	import type { ${1:TypeName} } from '${2:module}';
+
+snippet impd "default import"
+	import ${1:name} from '${2:module}';
+
+snippet interface "interface"
+	interface ${1:InterfaceName} {
+	  ${0}
+	}
+
+snippet type "type alias"
+	type ${1:TypeName} = ${0};
+
+snippet enum "enum declaration"
+	enum ${1:EnumName} {
+	  ${0}
+	}
+
+snippet class "class"
+	class ${1:ClassName} {
+	  public constructor(${2}) {
+	    ${0}
+	  }
+	}
+
+snippet generic "generic function"
+	function ${1:functionName}<${2:T}>(${3:value}: ${2}): ${4:T} {
+	  ${0}
+	}
+
+snippet route "typed Express route"
+	router.${1:get}('${2:/path}', async (
+	  req: Request,
+	  res: Response,
+	  next: NextFunction,
+	): Promise<void> => {
+	  try {
+	    ${0}
+	  } catch (error) {
+	    next(error);
+	  }
+	});
+
+snippet middleware "typed Express middleware"
+	function ${1:middlewareName}(
+	  req: Request,
+	  res: Response,
+	  next: NextFunction,
+	): void {
+	  ${0}
+	  next();
+	}
+
+snippet describe "test describe block"
+	describe('${1:subject}', () => {
+	  ${0}
+	});
+
+snippet test "test"
+	test('${1:description}', ${2:async }() => {
+	  ${0}
+	});

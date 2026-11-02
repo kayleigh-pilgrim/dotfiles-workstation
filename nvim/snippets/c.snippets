@@ -1,0 +1,79 @@
+snippet main "main function"
+	int main(int argc, char *argv[])
+	{
+		${0}
+
+		return 0;
+	}
+
+snippet fn "function"
+	${1:void} ${2:function_name}(${3})
+	{
+		${0}
+	}
+
+snippet sfn "static function"
+	static ${1:void} ${2:function_name}(${3})
+	{
+		${0}
+	}
+
+snippet struct "struct declaration"
+	struct ${1:StructName}
+	{
+		${0}
+	};
+
+snippet typedef "typedef struct"
+	typedef struct
+	{
+		${1}
+	} ${2:TypeName};
+
+snippet enum "enum declaration"
+	enum ${1:EnumName}
+	{
+		${0}
+	};
+
+snippet guard "header include guard"
+	#ifndef ${1:PROJECT_HEADER_H}
+	#define ${1}
+
+	${0}
+
+	#endif /* ${1} */
+
+snippet fori "indexed for loop"
+	for (${1:size_t} ${2:i} = 0; ${2} < ${3:length}; ${2}++)
+	{
+		${0}
+	}
+
+snippet switch "switch statement"
+	switch (${1:value})
+	{
+		case ${2:value}:
+			${3}
+			break;
+
+		default:
+			${0}
+			break;
+	}
+
+snippet ifdef "conditional compilation"
+	#ifdef ${1:MACRO}
+	${0}
+	#endif
+
+snippet cs50 "CS50 boilerplate"
+	#include <cs50.h>
+	#include <stdio.h>
+
+	int main(void)
+	{
+		${0}
+
+		return 0;
+	}

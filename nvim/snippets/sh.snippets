@@ -1,0 +1,98 @@
+snippet script "Bash script"
+	#!/usr/bin/env bash
+
+	set -euo pipefail
+
+	main() {
+	    ${0}
+	}
+
+	main "$@"
+
+snippet fn "Bash function"
+	${1:function_name}() {
+	    ${0}
+	}
+
+snippet if "if statement"
+	if ${1:[[ condition ]]}; then
+	    ${0}
+	fi
+
+snippet ifelse "if/else statement"
+	if ${1:[[ condition ]]}; then
+	    ${2}
+	else
+	    ${0}
+	fi
+
+snippet case "case statement"
+	case "$${1:variable}" in
+	    ${2:pattern})
+	        ${3}
+	        ;;
+	    *)
+	        ${0}
+	        ;;
+	esac
+
+snippet for "for loop"
+	for ${1:item} in ${2:"$@"}; do
+	    ${0}
+	done
+
+snippet while "while loop"
+	while ${1:[[ condition ]]}; do
+	    ${0}
+	done
+
+snippet getopts "getopts argument parsing"
+	while getopts ":${1:hv}" option; do
+	    case "$option" in
+	        ${2:h})
+	            ${3}
+	            ;;
+	        \?)
+	            printf 'Unknown option: -%s\n' "$OPTARG" >&2
+	            exit 1
+	            ;;
+	        :)
+	            printf 'Option -%s requires an argument\n' "$OPTARG" >&2
+	            exit 1
+	            ;;
+	    esac
+	done
+
+	shift "$((OPTIND - 1))"
+
+	${0}
+
+snippet trap "cleanup trap"
+	cleanup() {
+	    ${0}
+	}
+
+	trap cleanup EXIT
+
+snippet tempdir "temporary directory with cleanup"
+	tmp_dir="$(mktemp -d)"
+
+	cleanup() {
+	    rm -rf -- "$tmp_dir"
+	}
+
+	trap cleanup EXIT
+
+	${0}
+
+snippet requirecmd "require command"
+	if ! command -v "${1:command}" >/dev/null 2>&1; then
+	    printf 'Required command not found: %s\n' '${1}' >&2
+	    exit 1
+	fi
+
+snippet msg "formatted message"
+	printf '\n%s\n' "${1:message}"
+
+snippet error "error message"
+	printf 'Error: %s\n' "${1:message}" >&2

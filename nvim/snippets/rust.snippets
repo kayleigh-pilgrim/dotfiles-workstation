@@ -1,0 +1,70 @@
+snippet fn "function"
+	fn ${1:function_name}(${2}) -> ${3:()} {
+		${0}
+	}
+
+snippet pubfn "public function"
+	pub fn ${1:function_name}(${2}) -> ${3:()} {
+		${0}
+	}
+
+snippet afn "async function"
+	async fn ${1:function_name}(${2}) -> ${3:()} {
+		${0}
+	}
+
+snippet struct "struct declaration"
+	#[derive(${1:Debug})]
+	struct ${2:StructName} {
+		${0}
+	}
+
+snippet enum "enum declaration"
+	#[derive(${1:Debug})]
+	enum ${2:EnumName} {
+		${0}
+	}
+
+snippet impl "impl block"
+	impl ${1:TypeName} {
+		${0}
+	}
+
+snippet trait "trait declaration"
+	trait ${1:TraitName} {
+		${0}
+	}
+
+snippet match "match expression"
+	match ${1:value} {
+		${2:pattern} => ${3},
+		_ => ${0},
+	}
+
+snippet test "unit test"
+	#[test]
+	fn ${1:test_name}() {
+		${0}
+	}
+
+snippet modtest "tests module"
+	#[cfg(test)]
+	mod tests {
+		use super::*;
+
+		#[test]
+		fn ${1:test_name}() {
+			${0}
+		}
+	}
+
+snippet resultmain "main returning Result"
+	fn main() -> Result<(), Box<dyn std::error::Error>> {
+		${0}
+
+		Ok(())
+	}
+
+snippet derive "derive attribute"
+	#[derive(${1:Debug, Clone})]
+	${0}

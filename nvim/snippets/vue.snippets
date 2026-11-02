@@ -1,0 +1,76 @@
+snippet sfc "Vue single-file component"
+	<template>
+	  <div>
+	    ${0}
+	  </div>
+	</template>
+
+	<script setup lang="ts">
+	${1}
+	</script>
+
+	<style scoped>
+	${2}
+	</style>
+
+snippet scriptsetup "Vue script setup block"
+	<script setup lang="${1:ts}">
+	${0}
+	</script>
+
+snippet ref "Vue ref"
+	const ${1:value} = ref<${2:string}>(${3});
+
+snippet reactive "Vue reactive object"
+	const ${1:state} = reactive({
+	  ${0}
+	});
+
+snippet computed "Vue computed value"
+	const ${1:value} = computed(() => {
+	  return ${0};
+	});
+
+snippet watch "Vue watcher"
+	watch(${1:source}, (${2:value}, ${3:oldValue}) => {
+	  ${0}
+	});
+
+snippet watcheffect "Vue watchEffect"
+	watchEffect(() => {
+	  ${0}
+	});
+
+snippet props "typed Vue props"
+	interface Props {
+	  ${1}
+	}
+
+	const props = defineProps<Props>();
+
+snippet propsdefaults "Vue props with defaults"
+	interface Props {
+	  ${1}
+	}
+
+	const props = withDefaults(defineProps<Props>(), {
+	  ${0}
+	});
+
+snippet emits "typed Vue emits"
+	const emit = defineEmits<{
+	  ${1:event}: [${2:value}: ${3:string}];
+	}>();
+
+snippet model "Vue defineModel"
+	const ${1:model} = defineModel<${2:string}>({
+	  ${0}
+	});
+
+snippet mounted "Vue onMounted"
+	onMounted(() => {
+	  ${0}
+	});
+
+snippet component "Vue component import"
+	import ${1:ComponentName} from '${2:./ComponentName.vue}';

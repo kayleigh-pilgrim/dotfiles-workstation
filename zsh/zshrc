@@ -1,0 +1,545 @@
+# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
+# Initialization code that may require console input (password prompts, [y/n]
+# confirmations, etc.) must go above this block; everything else may go below.
+if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
+  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+fi
+
+
+
+
+
+
+#############
+# OH MY ZSH #
+#############
+#export ZSH="$HOME/.oh-my-zsh"
+#export ZSH_CUSTOM="$ZSH/custom"
+
+# Puppet manages updates.
+#zstyle ':omz:update' mode disabled
+
+ZSH_THEME="powerlevel10k/powerlevel10k"
+
+export ZSH="/usr/share/oh-my-zsh"
+
+HYPHEN_INSENSITIVE="true"
+COMPLETION_WAITING_DOTS="true"
+HIST_STAMPS="yyyy-mm-dd"
+ENABLE_CORRECTION="true"
+# Uncomment the following line if pasting URLs and other text is messed up.
+#DISABLE_MAGIC_FUNCTIONS="true"
+
+plugins=(
+    # Productivity
+    git gh fzf zoxide tmux extract sudo
+    #zsh-interactive-cd zsh-autosuggestions zsh-history-substring-search
+    # UI/UX Enhancements
+    colored-man-pages command-not-found
+    # Tools
+    alias-finder history
+)
+
+source $ZSH/oh-my-zsh.sh
+
+
+
+
+##########
+# CONFIG #
+##########
+# Ignore commands that start with spaces and duplicates.
+export HISTSIZE=32768
+export HISTFILESIZE=$HISTSIZE
+export HISTCONTROL=ignoreboth
+export HISTORY_IGNORE="(\&|[bf]g|c|clear|history|exit|q|pwd|ls|cd|date|* --help)"
+# Make new shells get the history lines from all previous
+#shells instead of the default "last window closed" history.
+export PROMPT_COMMAND="history -a; $PROMPT_COMMAND"
+export KEYTIMEOUT=15
+export EDITOR=nvim
+export GIT_EDITOR=nvim
+export VISUAL=nvim
+export PAGER=less
+export NVIM_LISTEN_ADDRESS=/tmp/nvimsocket
+export LANG="en_US.UTF-8"
+export LC_ALL="en_US.UTF-8"
+#export FZF_DEFAULT_COMMAND='ag -u -g ""'
+export FZF_DEFAULT_COMMAND='rg --files --hidden --glob "!.git/*"'
+export FZF_DEFAULT_OPTS='
+--border=rounded
+--padding=0,1
+--margin=4,10
+--color=dark
+--color=fg:-1,bg:-1,hl:#c678dd,fg+:#ffffff,bg+:#4b5263,hl+:#d858fe
+--color=info:#98c379,prompt:#61afef,pointer:#be5046,marker:#e5c07b,spinner:#61afef,header:#61afef,gutter:-1,border:#1f2335
+'
+export LESS_TERMCAP_md="$(tput bold 2> /dev/null; tput setaf 2 2> /dev/null)"
+export LESS_TERMCAP_me="$(tput sgr0 2> /dev/null)"
+export MANPAGER="less -X"
+
+typeset -U path cdpath fpath
+
+# (N) makes sure it doesn't complain when it doesn't exist -%>
+path=(
+    $HOME/.local/bin
+    $HOME/.config/composer/vendor/bin
+    #$HOME/.go/bin(N)
+    $HOME/.cargo/bin(N)
+    $HOME/.rustup/toolchains/stable-x86_64-unknown-linux-gnu/bin(N)
+    #$HOME/.local/share/JetBrains/Toolbox/scripts(N)
+    #./vendor/bin(N)
+    #$HOME/.local/share/bob/nvim-bin(N)
+    $path
+)
+
+setopt auto_cd
+cdpath=(
+    $HOME/Code
+)
+
+# Completion plugin
+zstyle ':completion:*' group-name ''
+zstyle ':completion:*:descriptions' format %d
+zstyle ':completion:*:descriptions' format %B%d%b
+zstyle ':completion:*:complete:(cd|pushd):*' tag-order 'local-directories named-directories'
+
+# Alias finder plugin
+zstyle ':omz:plugins:alias-finder' autoload yes # disabled by default
+#zstyle ':omz:plugins:alias-finder' longer yes  # disabled by default
+#zstyle ':omz:plugins:alias-finder' exact yes   # disabled by default
+zstyle ':omz:plugins:alias-finder' cheaper yes  # disabled by default
+
+
+
+
+###########
+# ALIASES #
+###########
+alias cd="z"
+alias nvim="env -u CFLAGS nvim"
+alias vim="nvim"
+alias vi='nvim'
+alias vis='nvim "+set si"'
+alias vom='nvim'
+alias nvom='nvim'
+alias copy="xclip -selection clipboard"
+alias paste="xclip -o -selection clipboard"
+# alias cat="bat --style=plain"
+alias sail='[ -f sail ] && sail || vendor/bin/sail'
+alias rm='rm -I' # prompt once when removing >3 files
+alias diff='diff --color=auto'
+alias c='clear'
+alias cls='clear'
+alias ipconfig='ifconfig'
+alias hotp='htop'
+alias da='date "+%Y-%m-%d %A %T %Z"'
+alias goback='cd "$OLDPWD"'
+alias home='cd ~'
+#alias pullpuppet='sudo puppet agent -tv'
+# Latest error messages from journalctl
+alias jctl="journalctl -p 3 -xb"
+
+# Arch
+alias rmpkg="sudo pacman -Rsn"
+alias cleanch="sudo pacman -Scc"
+alias fixpacman="sudo rm /var/lib/pacman/db.lck"
+alias update="$HOME/.local/bin/update.sh"
+#alias update="/usr/bin/bash ~/.local/bin/update.sh"
+alias cleanup="sudo pacman -Rsn $(pacman -Qtdq)"
+# Recent installed packages
+alias rip="expac --timefmt='%Y-%m-%d %T' '%l\t%n %v' | sort | tail -200 | nl"
+
+# Eza instead of ls -%>
+if command -v eza &> /dev/null; then
+  alias ls='eza --icons --group-directories-first'
+  alias ll='eza -alh --icons --group-directories-first --hyperlink'
+  alias la='eza -a --icons --group-directories-first'
+  alias lt='eza --tree --level=2 --icons'
+  alias l='eza -lF --icons --git --group-directories-first --hyperlink'
+fi
+
+# Grep -> ripgrep
+alias grep='rg --color=auto'
+alias grepi='rg -i --color=auto' # ignore case
+alias grepE='rg -E --color=auto' # patterns are regular expressions
+alias grepF='rg -F --color=auto' # patterns are strings
+
+# Laravel
+alias a="php artisan"
+alias p="php artisan test"
+alias pp="php artisan test --parallel"
+alias c="composer"
+alias tinker="php artisan tinker"
+alias seed="php artisan db:seed"
+alias serve="php artisan serve"
+alias mfs="php artisan migrate:fresh --seed"
+alias sqlit="sed -e 's/\(DB_.*\)/# \\1/g' -e 's/# \(DB_CONNECTION=\).*/\\1sqlite/g' -i .env"
+alias lenv="cp -n .env.example .env && (grep '^APP_KEY=.\+' .env > /dev/null || php artisan key:generate)"
+alias laravel-setup="composer install && lenv && sqlit && php artisan migrate --force --seed"
+alias flush-redis="redis-cli FLUSHALL"
+
+# Git
+alias g="git"
+alias gs="git s"
+alias co="git checkout"
+alias main='git checkout $([ `git rev-parse --quiet --verify master` ] && echo "master" || echo "main")'
+alias wip='git commit -m "wip"'
+alias uncommit="git reset --soft HEAD~1"
+nah() {
+    git reset --hard
+
+    if [[ $1 == "-f" ]]; then
+        git clean -df
+    fi
+}
+
+# Docker
+alias d="docker"
+alias dc="docker compose"
+alias dps='docker ps'
+alias dpsa='docker ps -a'
+alias dlogs='docker logs -f'
+alias dsh='docker exec -it' # usage: dsh <container> bash
+alias dprune='docker system prune -af'
+
+# Ports / sockets
+alias 80view="netstat -anpl | grep :80 | awk {'print $5'} | cut -d":" -f1 | sort | uniq -c | sort -n | sed -e 's/^ *//' -e 's/ *\$//'"
+alias 443view="netstat -anpl | grep :443 | awk {'print $5'} | cut -d":" -f1 | sort | uniq -c | sort -n | sed -e 's/^ *//' -e 's/ *\$//'"
+alias openports='netstat -nape --inet'
+
+# Disk usage helpers
+alias dfh='df -hT'
+alias folders='du -h --max-depth=1'
+alias diskspace="du -S | sort -nr | less"
+
+# tar helpers
+alias mktar='tar -cvf'
+alias mkbz2='tar -cvjf'
+alias mkgz='tar -cvzf'
+alias untar='tar -xvf'
+alias unbz2='tar -xvjf'
+alias ungz='tar -xvzf'
+
+# SHA
+alias sha1='openssl sha1'
+alias sha256='sha256sum'
+
+# tree
+alias tree='tree -CAhF --dirsfirst'
+alias treed='tree -CAFd'
+
+# Quick web server in current dir
+alias servepy='python3 -m http.server 8000'
+alias servephp='php -S 127.0.0.1:8000'
+
+# iptables & nftables
+alias fw='iptables -nL'
+alias fwv='iptables -nvL'
+alias saveiptables='iptables-save > /etc/iptables/rules.v4 && ip6tables-save > /etc/iptables/rules.v6'
+alias restoreiptables='iptables-restore < /etc/iptables/rules.v4 && ip6tables-restore < /etc/iptables/rules.v6'
+alias nftlist='nft list ruleset'
+
+# fail2ban stats
+#alias sortf2b="zgrep -h 'Ban ' /var/log/fail2ban.log* | awk '{print \$NF}' | sort | uniq -c | sort -n"
+#alias f2bsubnets="zgrep -h 'Ban ' /var/log/fail2ban.log* | awk '{print \$NF}' | awk -F. '{print \$1\".\"\$2\".\"\$3}' | sort | uniq -c | sort -n | tail"
+
+# restart php-fpm and nginx
+#alias reweb="systemctl reload nginx ; systemctl reload 'php*-fpm'"
+
+# Count all files (recursively) in the current folder.
+alias countfiles="for t in files links directories; do echo \`find . -type \${t:0:1} | wc -l\` \$t; done 2> /dev/null"
+
+# To see if a command is aliased, a file, or a built-in command.
+alias checkcommand="type -t"
+
+# Vim-like
+alias :e='edit'
+alias :q='exit'
+
+# SSH shortcuts
+alias daemon='ssh daemon'
+alias angelbeats='ssh angelbeats'
+alias homie='ssh homie'
+alias homie_outside='ssh homie_outside'
+alias parrot='ssh parrot'
+
+# Show all logs in /var/log.
+alias logs="find /var/log -type f -exec file {} \; | grep 'text' | cut -d' ' -f1 | sed -e's/:$//g' | grep -v '[0-9]$' | xargs tail -f"
+# 10 largest log files
+alias logsort='du -a /var/log | sort -n -r | head -n 10'
+
+# Global aliases to do things like: cat logs.txt G "error" WC
+alias -g G='| grep'
+alias -g L='| less'
+alias -g J='| jq'
+alias -g H='| head'
+alias -g T='| tail'
+alias -g WC='| wc -l'
+alias -g NE='2>/dev/null' # No errors
+
+# CyberSec
+alias nmap='sudo nmap'
+alias listen4666='nc -lvnp 4666'
+
+
+
+
+#############
+# FUNCTIONS #
+#############
+# Helpers
+_have() { command -v "$1" >/dev/null 2>&1; }
+_open_url() {
+    if _have xdg-open; then xdg-open "$1" >/dev/null 2>&1 &
+    elif _have open; then open "$1" >/dev/null 2>&1 &
+    else printf '%s\n' "$1"
+    fi
+}
+
+# Recursive delete
+rmd() { command rm -rfv -- "$@"; }
+
+# Search helpers
+f() { find . -iname "*$**" 2>/dev/null; } # quick find by glob
+rgrep() { grep -RIn -- "$@" .; }          # recursive grep
+
+# Copy/move/mkdir + cd
+cpg()    { [ -d "$2" ] && { cp -- "$1" "$2" && cd -- "$2"; } || cp -- "$1" "$2"; }
+mvg()    { [ -d "$2" ] && { mv -- "$1" "$2" && cd -- "$2"; } || mv -- "$1" "$2"; }
+mkdirg() { mkdir -p -- "$1" && cd -- "$1"; }
+
+# Encoders
+hex-encode() { printf '%s' "$*" | xxd -p; }
+hex-decode() { printf '%s' "$*" | xxd -p -r; }
+rot13()      { printf '%s\n' "$*" | tr 'A-Za-z' 'N-ZA-Mn-za-m'; }
+
+# Extract archives (replaced with plugin)
+#extract() {
+#    if [ $# -eq 0 ]; then echo "Usage: extract <archive> [...]" >&2; return 2; fi
+#    while [ $# -gt 0 ]; do
+#        local a=$1; shift
+#        if [ ! -f "$a" ]; then echo "'$a' is not a file"; continue; fi
+#        case "$a" in
+#            *.tar.bz2|*.tbz2)          tar xvjf -- "$a" ;;
+#            *.tar.gz|*.tgz)            tar xvzf -- "$a" ;;
+#            *.tar.xz)                  tar xvJf -- "$a" ;;
+#            *.tar.zst|*.tzst)          tar --use-compress-program=unzstd -xvf -- "$a" ;;
+#            *.tar)                     tar xvf -- "$a" ;;
+#            *.bz2)                     bunzip2 -- "$a" ;;
+#            *.gz)                      gunzip -- "$a" ;;
+#            *.xz)                      unxz -- "$a" ;;
+#            *.zst)                     unzstd -- "$a" ;;
+#            *.zip)                     unzip -- "$a" ;;
+#            *.7z)    _have 7z    &&    7z x -- "$a"     || echo "7z not installed" ;;
+#            *.rar)   _have unrar &&    unrar x -- "$a"  || echo "unrar not installed" ;;
+#            *.Z)                       uncompress -- "$a" ;;
+#            *) echo "don't know how to extract '$a'";;
+#        esac
+#    done
+#}
+
+# Grep files recursively
+ftext() {
+    if _have rg; then rg -i --hidden --line-number --color=always "$@" | less -R
+    else grep -iIHrn --color=always -- "$1" . | less -R
+    fi
+}
+
+# Go up N directories
+up() {
+    local n=${1:-1} p=.
+    while [ "$n" -gt 0 ]; do p="$p/.."; n=$((n-1)); done
+    cd "$p"
+}
+
+# cd then ls
+cdl() { if [ -n "$1" ]; then builtin cd -- "$@" && ls; else builtin cd ~ && ls; fi; }
+
+# OS / version detection
+os() { if [ -r /etc/os-release ]; then . /etc/os-release; printf '%s\n' "${PRETTY_NAME:-$NAME}"; else uname -a; fi; }
+osver(){
+    if [ -r /etc/os-release ]; then
+        . /etc/os-release
+        printf '%s (%s) — %s\n' "${PRETTY_NAME:-$NAME}" "${VERSION_ID:-?}" "$(uname -a)"
+    else uname -a; fi
+}
+
+# JSON/YAML pretty-print
+json() { command -v jq >/dev/null 2>&1 && jq . || python3 -m json.tool; }
+yaml() { command -v yq >/dev/null 2>&1 && yq -P . || python3 - <<'PY'
+import sys,yaml,io; print(yaml.safe_dump(yaml.safe_load(sys.stdin.read()), sort_keys=False))
+PY
+}
+
+# Generate UUID
+uuid() { command -v uuidgen >/dev/null 2>&1 && uuidgen || python3 - <<'PY'
+import uuid; print(uuid.uuid4())
+PY
+}
+
+# Show ipv4&6 addresses
+netinfo() {
+    printf 'IPv4: '
+    ip -o -4 addr show scope global up | awk '{print $4}' | cut -d/ -f1 | xargs echo -n
+    printf '\nIPv6: '
+    ip -o -6 addr show scope global up | awk '{print $4}' | cut -d/ -f1 | xargs echo -n
+    printf '\n'
+}
+
+# Internal + External IPs
+alias whatsmyip="whatismyip"
+whatismyip() {
+    printf 'Internal:\n'; netinfo
+    printf 'External:\nIPv4: '
+    if _have curl; then curl -fsS --max-time 4 https://v4.ident.me/ || true
+    else wget -qO- https://v4.ident.me/ || true; fi
+    printf '\nIPv6: '
+    if _have curl; then curl -fsS --max-time 4 https://v6.ident.me/ || true
+    else wget -qO- https://v6.ident.me/ || true; fi
+    printf '\n'
+}
+
+# Nginx log tail
+nginxlog() {
+    cd /var/log/nginx/ || return
+    ls -xAh
+    if _have multitail; then multitail --no-repeat -c -s 2 /var/log/nginx/*.log
+    else tail -F /var/log/nginx/*.log
+    fi
+}
+
+# Trim whitespace
+trim() {
+    local s
+    if [ $# -gt 0 ]; then s=$*; else s=$(cat); fi
+    s="${s#"${s%%[![:space:]]*}"}"; s="${s%"${s##*[![:space:]]}"}"
+    printf '%s' "$s"
+}
+
+# Open anything
+o() { [ $# -eq 0 ] && _open_url "." || _open_url "$*"; }
+alias open='o'
+
+# tree with pager
+tre() { _have tree && tree -aC -I '.git' --dirsfirst "$@" | less -FRNX; }
+
+# Open repo in a browser
+repo() {
+    _have git || { echo "git not found"; return 1; }
+    git rev-parse --is-inside-work-tree >/dev/null 2>&1 || { echo "Not a git repo!"; return 1; }
+    local url base branch rel tree="tree"
+    base=$(git remote get-url origin 2>/dev/null) || { echo "No origin remote"; return 1; }
+    base=${base%.git}
+    base=${base/git@github.com:/https://github.com/}
+    base=${base/git@gitlab.com:/https://gitlab.com/}
+    base=${base/git@bitbucket.org:/https://bitbucket.org/}
+    base=${base/git:\/\/github.com/https:\/\/github.com}
+    [[ $base == *bitbucket* ]] && tree="src"
+    branch=$(git name-rev --name-only --no-undefined --always HEAD 2>/dev/null)
+    rel="$(pwd)"; rel="${rel#$(cd "./$(git rev-parse --show-cdup)" || return; pwd)}"
+    url="${base}/${tree}/${branch}${rel}"
+    echo "Opening $url"
+    _open_url "$url"
+}
+
+# Notify wether a website is up
+isup() {
+    local uri=$1; [ -n "$uri" ] || { echo "Usage: isup <url>"; return 2; }
+    local ok=1
+    if _have curl; then curl -fsS --max-time 5 -o /dev/null -w "%{http_code}" "$uri" | grep -q '^2' && ok=0
+    else wget -q --spider --timeout=5 "$uri" && ok=0; fi
+    if _have notify-send; then
+        if [ $ok -eq 0 ]; then notify-send --urgency=low  "$uri is up"
+        else notify-send --urgency=critical "$uri is down"; fi
+    else
+        [ $ok -eq 0 ] && echo "$uri is up" || echo "$uri is down"
+    fi
+}
+
+composer-link() {
+    composer config minimum-stability dev
+    local package=`echo $1 | sed -nr 's/.*\/([^\/]+)$/\1/p'`
+    composer config "repositories.$package" '{"type": "path", "url": "'$1'"}'
+}
+
+composer-github() {
+    composer config minimum-stability dev
+    local package=`echo $1 | sed -nr 's/.*\/(.*)\.git/\1/p'`
+    composer config "repositories.$package" vcs $1
+}
+
+
+
+
+###################
+# MISC &  EXPORTS #
+###################
+# Fix slowness of pastes with zsh-syntax-highlighting.zsh
+#pasteinit() {
+#  OLD_SELF_INSERT=${${(s.:.)widgets[self-insert]}[2,3]}
+#  zle -N self-insert url-quote-magic # I wonder if you'd need `.url-quote-magic`?
+#}
+#pastefinish() {
+#  zle -N self-insert $OLD_SELF_INSERT
+#}
+#zstyle :bracketed-paste-magic paste-init pasteinit
+#zstyle :bracketed-paste-magic paste-finish pastefinish
+# Modern replacement that also fixes the slowness of pastes
+zstyle ':bracketed-paste-magic' active-widgets '.self-*'
+
+# Cargo
+if [ -f "$HOME/.cargo/env" ]; then
+    . "$HOME/.cargo/env"
+elif [ -f "$HOME/.local/share/cargo/env" ]; then
+    . "$HOME/.local/share/cargo/env"
+fi
+
+# Opam
+if [ -d "$HOME/.opam/opam-init" ]; then
+    [ -r "$HOME/.opam/opam-init/init.sh" ] && . "$HOME/.opam/opam-init/init.sh" >/dev/null 2>&1 || true
+fi
+
+# Deno
+[ -d "$HOME/.deno" ] && . "$HOME/.deno/env"
+[ -f "$HOME/.local/share/bash-completion/completions/deno.bash" ] && source $HOME/.local/share/bash-completion/completions/deno.bash
+
+# DynMOTD
+#if [[ $- == *i* && $0 == '/usr/bin/zsh' ]]; then
+[ -f /home/kayleigh/.local/bin/dynmotd.sh ] && /bin/bash /home/kayleigh/.local/bin/dynmotd.sh
+#fi
+
+#source /usr/share/zsh-theme-powerlevel10k/powerlevel10k.zsh-theme
+#source "$HOME/.oh-my-zsh/custom/themes/powerlevel10k/powerlevel10k.zsh-theme"
+source /usr/share/zsh-theme-powerlevel10k/powerlevel10k.zsh-theme
+
+# Fish-like syntax highlighting and autosuggestions
+source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
+
+# Use history substring search
+source /usr/share/zsh/plugins/zsh-history-substring-search/zsh-history-substring-search.zsh
+bindkey '^[[A' history-substring-search-up
+bindkey '^[[B' history-substring-search-down
+
+# pkgfile "command not found" handler
+source /usr/share/doc/pkgfile/command-not-found.zsh
+
+# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
+[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+
+[[ -r "$HOME/.p10k.zsh" ]] && source "$HOME/.p10k.zsh"
+
+# Keep this last.
+#source "$ZSH_CUSTOM/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
+export FZF_BASE=/usr/share/fzf
+
+# CS50#export CC="clang"
+#export CFLAGS="-ferror-limit=1 -gdwarf-4 -ggdb3 -O0 -std=c11 -Wall -Werror -Wextra -Wno-gnu-folding-constant -Wno-sign-compare -Wno-unused-parameter -Wno-unused-variable -Wno-unused-but-set-variable -Wshadow"
+#export LDLIBS="-lcrypt -lcs50 -lm"
+
+# WeChall
+#export WECHALLUSER=""
+#export WECHALLTOKEN=""
+
+# vim: nospell
