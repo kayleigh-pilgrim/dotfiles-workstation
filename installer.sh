@@ -600,6 +600,18 @@ else
     msg "Linking PHP config"
     sudo ln -s "$php_target" "$php_link"
 fi
+php_conf_link="/etc/php/conf.d"
+php_conf_target="$DOTFILES/php/conf.d"
+if [[ -L "$php_conf_link" && "$php_conf_link" -ef "$php_conf_target" ]]; then
+    : # Already linked correctly.
+elif [[ -e "$php_conf_link" || -L "$php_conf_link" ]]; then
+    msg "Linking $php_conf_link"
+    sudo rm -fr "$php_conf_link"
+    sudo ln -s "$php_conf_target" "$php_conf_link"
+else
+    msg "Linking $php_conf_link"
+    sudo ln -s "$php_conf_target" "$php_conf_link"
+fi
 
 #
 # TODO reminders to self
